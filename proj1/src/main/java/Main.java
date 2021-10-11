@@ -16,7 +16,7 @@ public class Main {
         controller.searchController("indexNo", 3983763);
         controller.searchController("firstName", "Mariusz");
         controller.searchController("lastName", "Cena");
-        controller.searchController("faculty", "Elektryczny");
+        controller.searchController("faculty", "elektryczny");
 
         controller.closeSession();
     }

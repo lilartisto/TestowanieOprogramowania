@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Table
@@ -103,12 +104,32 @@ public class Student implements Serializable {
     public String toString() {
         return "Student{" + "\n" +
                 "\t" + "id = " + id + "\n" +
-                "\t" + "firstName = " + firstName + "\n" +
-                "\t" + "lastName = " + lastName + "\n" +
+                "\t" + "firstName = " + capitalizeFirstLetter(firstName) + "\n" +
+                "\t" + "lastName = " + capitalizeFirstLetter(lastName) + "\n" +
                 "\t" + "indexNo = " + indexNo + "\n" +
-                "\t" + "faculty = " + faculty + "\n" +
-                "\t" + "courseName = " + courseName + "\n" +
+                "\t" + "faculty = " + capitalizeFirstLetter(faculty) + "\n" +
+                "\t" + "courseName = " + capitalizeFirstLetter(courseName) + "\n" +
                 "\t" + "semesterNo = " + semesterNo + "\n" +
                 '}';
+    }
+
+    public String capitalizeFirstLetter(String word) {
+        if (word.contains(" ")) {
+            List<String> wordList = List.of(word.split(" "));
+            StringBuilder forReturn = new StringBuilder();
+            for (String term : wordList) {
+                forReturn.append(term.substring(0, 1).toUpperCase()).append(term.substring(1).toLowerCase()).append(" ");
+            }
+            return forReturn.toString().strip();
+        }
+
+        return word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase();
+    }
+
+    public void toLowercase(){
+        this.firstName = firstName.toLowerCase();
+        this.lastName = lastName.toLowerCase();
+        this.faculty = faculty.toLowerCase();
+        this.courseName = courseName.toLowerCase();
     }
 }

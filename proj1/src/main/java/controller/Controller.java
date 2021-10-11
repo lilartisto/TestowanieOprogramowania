@@ -24,6 +24,7 @@ public class Controller {
 
     public void saveStudent(Student student) {
         openSession();
+        student.toLowercase();
         session.save(student);
         transaction.commit();
         System.out.println("Saved student: " + student.getFirstName() + ' ' + student.getLastName());
@@ -43,6 +44,8 @@ public class Controller {
     //second parameter is search value, eg. Mariusz
     public List<Student> searchController(String attr, Object value) {
         openSession();
+        if (value.getClass().equals(String.class))
+            value = ((String) value).toLowerCase();
         System.out.print("Searching " + attr + " that is equal to " + value + "\n");
         String query = "from Student where " + attr + "=:" + attr;
         List<Student> studentList = session.createQuery(query, Student.class).setParameter(attr, value).list();

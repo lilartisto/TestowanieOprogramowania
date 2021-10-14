@@ -40,6 +40,38 @@ public class Controller {
     }
 
 
+    public void updateStudent(Student student) {
+        try {
+            if( student == null)
+                throw  new NullPointerException("Student cannot be null") ;
+        openSession();
+        student.toLowercase();
+        session.update(student);
+        System.out.println("Student " + student.getFirstName() +  " " + student.getLastName() + " updated");
+        transaction.commit();
+        }
+        catch(Exception e) {
+            System.out.println("There is no such student.");
+        }
+    }
+
+    public void deleteStudent(Student student) {
+        try {
+            if( student == null)
+                throw  new NullPointerException("Student cannot be null") ;
+        openSession();
+        student.toLowercase();
+        session.delete(student);
+        System.out.println("Student " + student.getFirstName() +  " " + student.getLastName() + " deleted");
+        transaction.commit();
+        }
+        catch(Exception E) {
+            System.out.println("There is no such student.");
+        }
+
+    }
+
+
     //first parameter is attribute name, eg. firstName
     //second parameter is search value, eg. Mariusz
     public List<Student> searchController(String attr, Object value) {

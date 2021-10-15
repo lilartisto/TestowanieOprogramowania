@@ -1,33 +1,27 @@
 package entity;
 
+import org.apache.commons.text.WordUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Table
 @Entity
 public class Student implements Serializable {
     @Id
-//    @Column(name = "id", nullable = false)
     private UUID id;
 
-//    @Column(name = "first_name")
     private String firstName;
 
-//    @Column(name = "last_name")
     private String lastName;
 
-//    @Column(name = "index_no")
     private Integer indexNo;
 
-//    @Column(name = "faculty")
     private String faculty;
 
-//    @Column(name = "course_name")
     private String courseName;
 
-//    @Column(name = "semester_no")
     private Integer semesterNo;
 
     public Student(String firstName, String lastName, Integer indexNo, String faculty, String courseName, Integer semesterNo) {
@@ -41,7 +35,6 @@ public class Student implements Serializable {
     }
 
     public Student() {
-
     }
 
     public UUID getId() {
@@ -104,26 +97,13 @@ public class Student implements Serializable {
     public String toString() {
         return "Student{" + "\n" +
                 "\t" + "id = " + id + "\n" +
-                "\t" + "firstName = " + capitalizeFirstLetter(firstName) + "\n" +
-                "\t" + "lastName = " + capitalizeFirstLetter(lastName) + "\n" +
+                "\t" + "firstName = " + WordUtils.capitalizeFully(firstName) + "\n" +
+                "\t" + "lastName = " + WordUtils.capitalizeFully(lastName) + "\n" +
                 "\t" + "indexNo = " + indexNo + "\n" +
-                "\t" + "faculty = " + capitalizeFirstLetter(faculty) + "\n" +
-                "\t" + "courseName = " + capitalizeFirstLetter(courseName) + "\n" +
+                "\t" + "faculty = " + WordUtils.capitalizeFully(faculty) + "\n" +
+                "\t" + "courseName = " + WordUtils.capitalizeFully(courseName) + "\n" +
                 "\t" + "semesterNo = " + semesterNo + "\n" +
                 '}';
-    }
-
-    public String capitalizeFirstLetter(String word) {
-        if (word.contains(" ")) {
-            List<String> wordList = List.of(word.split(" "));
-            StringBuilder forReturn = new StringBuilder();
-            for (String term : wordList) {
-                forReturn.append(term.substring(0, 1).toUpperCase()).append(term.substring(1).toLowerCase()).append(" ");
-            }
-            return forReturn.toString().strip();
-        }
-
-        return word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase();
     }
 
     public void toLowercase(){

@@ -24,6 +24,11 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.5.7.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.9</version>
+        </dependency>
     </dependencies>
 
 </project>

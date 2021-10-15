@@ -14,11 +14,14 @@ public class Main {
         controller.saveStudent(student);
         controller.saveStudent(student1);
         controller.saveStudent(studento);
+
         controller.showAllStudents();
+
         studento.setFirstName("Jonathan");
         controller.updateStudent(studento);
         controller.searchController("firstName", "Ewa");
         controller.deleteStudent(studento);
+
         controller.searchController("indexNo", 3983763);
         controller.searchController("firstName", "Mariusz");
         controller.searchController("lastName", "Cena");

@@ -5,8 +5,8 @@ import javax.persistence.Persistence;
 
 public class StudentRepository {
 
-    private static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
-    private static final EntityManager em = factory.createEntityManager();
+    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
+    private final EntityManager em = factory.createEntityManager();
 
     public void createStudent(String firstName, String lastName, Integer indexNo, String faculty, String courseName, Integer semesterNo) {
         if (firstName == null || lastName == null || indexNo == null || faculty == null || courseName == null || semesterNo == null)

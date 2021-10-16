@@ -2,6 +2,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class StudentRepository {
 
@@ -18,9 +19,23 @@ public class StudentRepository {
         transaction.commit();
     }
 
+    public void save(Student student) {
+        if(student == null){
+            throw new IllegalArgumentException("Student cannot be null");
+        }
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.persist(student);
+        transaction.commit();
+    }
+
     public Student getById(long id) {
         em.clear();
         return em.find(Student.class, id);
+    }
+
+    public List<Student> getAll() {
+        return em.createQuery("Select s from Student s", Student.class).getResultList();
     }
 
     public void updateFirstName(Student student, String newFirstName) {
@@ -30,6 +45,10 @@ public class StudentRepository {
         transaction.begin();
         student.setFirstName(newFirstName);
         transaction.commit();
+    }
+
+    public void updateStudent(Student student) {
+        //TODO
     }
 
     public void updateStudent(Student student, String newFirstName, String newLastName, Integer newIndexNo, String newFaculty, String newCourseName, Integer newSemesterNo) {

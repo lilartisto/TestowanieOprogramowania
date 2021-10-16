@@ -1,13 +1,13 @@
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 public class StudentRepository {
 
-    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
-    private final EntityManager em = factory.createEntityManager();
+    private EntityManager em;
+
+    public StudentRepository(EntityManager em) {
+        this.em = em;
+    }
 
     public void createStudent(String firstName, String lastName, Integer indexNo, String faculty, String courseName, Integer semesterNo) {
         if (firstName == null || lastName == null || indexNo == null || faculty == null || courseName == null || semesterNo == null)
@@ -31,7 +31,10 @@ public class StudentRepository {
 
     public Student getById(long id) {
         em.clear();
-        return em.find(Student.class, id);
+        Student student = em.find(Student.class, id);
+        if(student == null)
+            throw new EntityNotFoundException("No student with id " + id);
+        return student;
     }
 
     public List<Student> getAll() {
@@ -48,7 +51,12 @@ public class StudentRepository {
     }
 
     public void updateStudent(Student student) {
-        //TODO
+        if (student == null)
+            throw new IllegalArgumentException("Passed student cannot be null");
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.merge(student);
+        transaction.commit();
     }
 
     public void updateStudent(Student student, String newFirstName, String newLastName, Integer newIndexNo, String newFaculty, String newCourseName, Integer newSemesterNo) {

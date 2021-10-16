@@ -1,17 +1,21 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentRepositoryTest {
-
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
+    private EntityManager em = factory.createEntityManager();
     private StudentRepository studentRepository;
 
     @BeforeEach
     public void setUp() {
-        studentRepository = new StudentRepository();
+        studentRepository = new StudentRepository(em);
     }
 
     // Artur:

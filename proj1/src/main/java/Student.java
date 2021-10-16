@@ -30,7 +30,8 @@ public class Student implements Serializable {
         this.semesterNo = semesterNo;
     }
 
-    public Student() {
+    public Student(){
+
     }
 
     public long getId() {

@@ -24,4 +24,13 @@ public class StudentRepository {
         em.clear();
         return em.find(Student.class, id);
     }
+
+    public void updateFirstName(Student student, String newFirstName) {
+        if (student == null || newFirstName == null)
+            throw new IllegalArgumentException("Passed values cannot be null");
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        student.setFirstName(newFirstName);
+        transaction.commit();
+    }
 }

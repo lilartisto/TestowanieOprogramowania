@@ -4,13 +4,18 @@ import entity.Student;
 import org.apache.commons.text.WordUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateUtilities_5;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class Controller {
     Session session = null;
     Transaction transaction = null;
+
+    private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
+    private static EntityManager em = factory.createEntityManager();
 
     public Controller() {
         openSession();
@@ -18,7 +23,7 @@ public class Controller {
 
     private void openSession() {
         if (session == null) {
-            session = HibernateUtilities_5.getSessionFactory().openSession();
+//            session = HibernateUtilities_5.getSessionFactory().openSession();
             transaction = session.beginTransaction();
         }
 //        transaction.

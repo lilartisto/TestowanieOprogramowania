@@ -33,4 +33,13 @@ public class StudentRepository {
         student.setFirstName(newFirstName);
         transaction.commit();
     }
+
+    public void delete(Student student) {
+        if (student == null)
+            throw new IllegalArgumentException("Passed student cannot be null");
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.remove(student);
+        transaction.commit();
+    }
 }

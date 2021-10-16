@@ -34,6 +34,20 @@ public class StudentRepository {
         transaction.commit();
     }
 
+    public void updateStudent(Student student, String newFirstName, String newLastName, Integer newIndexNo, String newFaculty, String newCourseName, Integer newSemesterNo) {
+        if (student == null)
+            throw new IllegalArgumentException("Passed student cannot be null");
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        student.setFirstName( newFirstName == null ? student.getFirstName() : newFirstName);
+        student.setLastName( newLastName == null ? student.getLastName() : newLastName);
+        student.setIndexNo( newIndexNo == null ? student.getIndexNo() : newIndexNo);
+        student.setFaculty( newFaculty == null ? student.getFaculty() : newFaculty);
+        student.setCourseName( newCourseName == null ? student.getCourseName() : newCourseName);
+        student.setSemesterNo( newSemesterNo == null ? student.getSemesterNo() : newSemesterNo);
+        transaction.commit();
+    }
+
     public void delete(Student student) {
         if (student == null)
             throw new IllegalArgumentException("Passed student cannot be null");

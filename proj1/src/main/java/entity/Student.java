@@ -1,16 +1,16 @@
 package entity;
 
+import com.sun.istack.NotNull;
 import org.apache.commons.text.WordUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
-@Table
 @Entity
 public class Student implements Serializable {
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     private String firstName;
 
@@ -25,7 +25,6 @@ public class Student implements Serializable {
     private Integer semesterNo;
 
     public Student(String firstName, String lastName, Integer indexNo, String faculty, String courseName, Integer semesterNo) {
-        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.indexNo = indexNo;
@@ -37,11 +36,11 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 

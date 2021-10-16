@@ -44,6 +44,13 @@ public class StudentRepositoryTest {
     }
 
     @Test
+    public void shouldAddStudentWhenAddedStudentIsCorrect() {
+        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+
+        assertDoesNotThrow(() -> studentRepository.save(student));
+    }
+
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenAddedStudentIsNull() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
@@ -64,6 +71,28 @@ public class StudentRepositoryTest {
     }
 
     @Test
+    public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasNullFields() {
+        Student student = new Student(null, null, null, null, null, null);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.save(student)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasNegativeNumbers() {
+        Student student = new Student("Stefani", "Germanotta", -123123, "WE", "CompSci", -1);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.save(student)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
+    }
+
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasSameIndexNoAsOtherStudent() {
         Student correctStudent = new Student("Maciek", "Kowalczyk", 777555, "WA", "Architecture", 1);
         Student studentWithSameIndex = new Student("Arkadiusz", "Duda", 777555, "WE", "Electricity", 1);
@@ -72,6 +101,26 @@ public class StudentRepositoryTest {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> studentRepository.save(studentWithSameIndex)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
+    }
+
+    @Test
+    public void shouldSucceedWhenDeletedAnExistingStudent() {
+        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+
+        studentRepository.save(student);
+        assertDoesNotThrow(() -> studentRepository.delete(student));
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenDeletedANonexistentStudent() {
+        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.delete(student)
         );
         //TODO
         //assertEquals("", exception.getMessage());
@@ -98,6 +147,16 @@ public class StudentRepositoryTest {
         Student updatedStudent = studentRepository.getById(student.getId());
 
         assertEquals(student, updatedStudent);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenUpdatedStudentIsNull() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.updateStudent(null)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
     }
 
 
@@ -136,6 +195,15 @@ public class StudentRepositoryTest {
     }
 
     @Test
+    public void shouldUpdateStudentWhenUpdatedStudentHasTheSameInfo() {
+        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+
+        studentRepository.save(student);
+
+        assertDoesNotThrow(() -> studentRepository.updateStudent(student));
+    }
+
+    @Test
     public void shouldThrowIllegalArgumentExceptionWhenUpdatedStudentHasSameIndexAsOtherStudent() {
         Student student = new Student("Michal", "Jackowski", 153064, "MINI", "Math", 2);
         Student studentToUpdate = new Student("Kamil", "Marciniak", 873834, "WA", "Architecture", 5);
@@ -153,22 +221,49 @@ public class StudentRepositoryTest {
         //assertEquals("", exception.getMessage());
     }
 
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenUpdatedStudentHasNegativeIntegers() {
+        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+
+        studentRepository.save(student);
+        student.setSemesterNo(-1);
+        student.setIndexNo(-999999);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.updateStudent(student)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenReadNonexistentStudent() {
+        // The repository is empty
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.getById(1)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
+    }
+
     // Kacper:
     // dodanie
-    //      poprawne
-    //      ktores z pol studenta jest nullem
-    //      indeks/semestr ujemny
+    //      poprawne DONE
+    //      ktores z pol studenta jest nullem DONE
+    //      indeks/semestr ujemny DONE
     //
     //  usuniecie
-    //      poprawne
-    //      nieistniejacego studenta
+    //      poprawne DONE
+    //      nieistniejacego studenta DONE
     //
     //  uaktualnienie
-    //      null'a
-    //      na te same wartosci
-    //      indeks/semestr ujemny
+    //      null'a DONE
+    //      na te same wartosci DONE
+    //      indeks/semestr ujemny DONE
     //
     //  czytanie
-    //      wczytaj nieistniejacego studenta
+    //      wczytaj nieistniejacego studenta DONE
 
 }

@@ -1,5 +1,3 @@
-package entity;
-
 import com.sun.istack.NotNull;
 import org.apache.commons.text.WordUtils;
 

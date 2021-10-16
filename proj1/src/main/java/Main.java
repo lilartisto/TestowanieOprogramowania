@@ -28,7 +28,7 @@ public class Main {
         controller.searchController("faculty", "elektryczny");
         controller.searchController("firstName", "Jonathan");
 
-        controller.closeSession();
+//        controller.closeSession();
     }
 
 }

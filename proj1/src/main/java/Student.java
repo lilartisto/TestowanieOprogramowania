@@ -1,4 +1,3 @@
-import com.sun.istack.NotNull;
 import org.apache.commons.text.WordUtils;
 
 import javax.persistence.*;
@@ -103,10 +102,17 @@ public class Student implements Serializable {
                 '}';
     }
 
-    public void toLowercase(){
-        this.firstName = firstName.toLowerCase();
-        this.lastName = lastName.toLowerCase();
-        this.faculty = faculty.toLowerCase();
-        this.courseName = courseName.toLowerCase();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student student)) return false;
+        return id == student.id &&
+                firstName.equals(student.firstName) &&
+                lastName.equals(student.lastName) &&
+                indexNo.equals(student.indexNo) &&
+                faculty.equals(student.faculty) &&
+                courseName.equals(student.courseName) &&
+                semesterNo.equals(student.semesterNo);
     }
+
 }

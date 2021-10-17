@@ -11,13 +11,14 @@ public class Main {
         repo.createStudent("Mariusz", "Pudzianowski", 3983763, "EITI", "Automatyka i Robotyka", 3);
         repo.createStudent("Lisek", "Ogrodniczek", 3983543, "Elektryczny", "Informatyka Stosowana", 4);
 
+        Student yep = new Student("HAH", "AHAH", 123, "Elektryczny", "Informatyka Stosowana", 4);
         Student tst = repo.getById(1);
         tst.setSemesterNo(2115);
         tst.setFirstName("JONATHAN");
         repo.updateStudent(tst);
         System.out.println(repo.getById(1));
         repo.delete(repo.getById(1));
-        System.out.println(repo.getById(1));
+        repo.updateStudent(yep, "Lisek", "Ogrodniczek", 3983543, "Elektryczny", "Informatyka Stosowana", 4);
         repo.updateStudent(repo.getById(2), null, null, null, "MiNI", null, null);
         System.out.println(repo.getById(2));
     }

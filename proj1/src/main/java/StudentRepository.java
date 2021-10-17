@@ -50,19 +50,16 @@ public class StudentRepository {
         return em.createQuery("Select s from Student s", Student.class).getResultList();
     }
 
-    public void updateFirstName(Student student, String newFirstName) {
-        if (student == null || newFirstName == null)
-            throw new IllegalArgumentException("Passed values cannot be null");
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        student.setFirstName(newFirstName);
-        transaction.commit();
-    }
-
     public void updateStudent(Student student) {
-        if (student == null)
+        if(student == null)
             throw new IllegalArgumentException("Passed student cannot be null");
-
+        if (student.getFirstName() == null || student.getLastName() == null || student.getCourseName() == null ||
+                student.getFaculty() == null || student.getIndexNo() == null || student.getSemesterNo() == null)
+            throw new IllegalArgumentException("All student's attributes cannot be null");
+        if (student.getFirstName().strip().equals("")  || student.getFirstName().strip().equals("") ||
+                student.getLastName().strip().equals("")  || student.getCourseName().strip().equals("")
+                || student.getFaculty().strip().equals("")  ||  student.getIndexNo() < 0 || student.getSemesterNo() < 0)
+            throw new IllegalArgumentException("Passed student has to have all valid parameters");
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         em.merge(student);
@@ -86,9 +83,9 @@ public class StudentRepository {
     public void delete(Student student) {
         if (student == null)
             throw new IllegalArgumentException("Passed student cannot be null");
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        em.remove(student);
-        transaction.commit();
+            EntityTransaction transaction = em.getTransaction();
+            transaction.begin();
+            em.remove(student);
+            transaction.commit();
     }
 }

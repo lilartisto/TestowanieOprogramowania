@@ -3,23 +3,21 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentRepositoryTest {
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
-    private EntityManager em = factory.createEntityManager();
+    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
+    private final EntityManager em = factory.createEntityManager();
     private StudentRepository studentRepository;
 
     @BeforeEach
     public void setUp() {
         studentRepository = new StudentRepository(em);
     }
-
-    // Artur:
-    // dodanie takiego samego id
 
     @Test
     public void shouldReturnAllStudentsWhenDataBaseIsNotEmpty() {
@@ -64,14 +62,13 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void shouldThrowIllegalArguentExceptionWhenAddedStudentHasEmptyStrings() {
+    public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasEmptyStrings() {
         Student student = new Student("", "", 123123, "", "", 3);
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> studentRepository.save(student)
         );
-        //TODO
-        assertEquals("", exception.getMessage());
+        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
     }
 
     @Test
@@ -81,8 +78,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.save(student)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("All student's attributes cannot be null", exception.getMessage());
     }
 
     @Test
@@ -92,8 +88,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.save(student)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
     }
 
     @Test
@@ -136,8 +131,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.delete(null)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Passed student cannot be null", exception.getMessage());
     }
 
     @Test
@@ -159,8 +153,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.updateStudent(null)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Passed student cannot be null", exception.getMessage());
     }
 
 
@@ -187,8 +180,8 @@ public class StudentRepositoryTest {
 
         studentRepository.save(student);
         student.setSemesterNo(7);
-        student.setFaculty(null);
-        student.setCourseName(null);
+        student.setFaculty("");
+        student.setCourseName("");
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
@@ -242,32 +235,13 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenReadNonexistentStudent() {
+    public void shouldThrowEntityNotFoundExceptionWhenReadNonexistentStudent() {
         // The repository is empty
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
                 () -> studentRepository.getById(1)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("No student with id 1", exception.getMessage());
     }
-
-    // Kacper:
-    // dodanie
-    //      poprawne DONE
-    //      ktores z pol studenta jest nullem DONE
-    //      indeks/semestr ujemny DONE
-    //
-    //  usuniecie
-    //      poprawne DONE
-    //      nieistniejacego studenta DONE
-    //
-    //  uaktualnienie
-    //      null'a DONE
-    //      na te same wartosci DONE
-    //      indeks/semestr ujemny DONE
-    //
-    //  czytanie
-    //      wczytaj nieistniejacego studenta DONE
 
 }

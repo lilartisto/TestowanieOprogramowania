@@ -235,6 +235,19 @@ public class StudentRepositoryTest {
     }
 
     @Test
+    public void shouldThrowIllegalArgumentExceptionWhenUpdatedNonexistentStudent() {
+        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+
+        // No studentRepository.save
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> studentRepository.updateStudent(student)
+        );
+        //TODO
+        //assertEquals("", exception.getMessage());
+    }
+
+    @Test
     public void shouldThrowEntityNotFoundExceptionWhenReadNonexistentStudent() {
         // The repository is empty
         EntityNotFoundException exception = assertThrows(

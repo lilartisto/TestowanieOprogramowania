@@ -18,8 +18,6 @@ public class Main {
         repo.updateStudent(tst);
         System.out.println(repo.getById(1));
         repo.delete(repo.getById(1));
-        repo.updateStudent(yep, "Lisek", "Ogrodniczek", 3983543, "Elektryczny", "Informatyka Stosowana", 4);
-        repo.updateStudent(repo.getById(2), null, null, null, "MiNI", null, null);
         System.out.println(repo.getById(2));
     }
 

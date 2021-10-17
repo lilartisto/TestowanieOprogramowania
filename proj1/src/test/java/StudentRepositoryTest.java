@@ -101,8 +101,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.save(studentWithSameIndex)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Unique index violation", exception.getMessage());
     }
 
     @Test
@@ -121,8 +120,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.delete(student)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("There is no such student in the database", exception.getMessage());
     }
 
     @Test
@@ -170,8 +168,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.updateStudent(student)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("All student's attributes cannot be null", exception.getMessage());
     }
 
     @Test
@@ -187,8 +184,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.updateStudent(student)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
     }
 
     @Test
@@ -214,8 +210,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.updateStudent(studentToUpdate)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Unique index violation", exception.getMessage());
     }
 
     @Test
@@ -230,8 +225,7 @@ public class StudentRepositoryTest {
                 IllegalArgumentException.class,
                 () -> studentRepository.updateStudent(student)
         );
-        //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
     }
 
     @Test
@@ -239,12 +233,12 @@ public class StudentRepositoryTest {
         Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
 
         // No studentRepository.save
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
                 () -> studentRepository.updateStudent(student)
         );
         //TODO
-        //assertEquals("", exception.getMessage());
+        assertEquals("No student with id 0", exception.getMessage());
     }
 
     @Test

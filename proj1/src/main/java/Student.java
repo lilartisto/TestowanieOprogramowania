@@ -13,6 +13,7 @@ public class Student implements Serializable {
 
     private String lastName;
 
+    @Column(unique = true)
     private Integer indexNo;
 
     private String faculty;

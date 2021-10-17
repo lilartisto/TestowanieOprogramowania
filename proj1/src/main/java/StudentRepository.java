@@ -1,6 +1,7 @@
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
+import javax.persistence.RollbackException;
 import java.util.List;
 
 public class StudentRepository {
@@ -33,9 +34,16 @@ public class StudentRepository {
                 || student.getFaculty().strip().equals("")  ||  student.getIndexNo() < 0 || student.getSemesterNo() < 0)
             throw new IllegalArgumentException("Passed student has to have all valid parameters");
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        em.persist(student);
-        transaction.commit();
+
+        try {
+            transaction.begin();
+            em.persist(student);
+            transaction.commit();
+        } catch (RollbackException e) {
+            throw new IllegalArgumentException("Unique index violation");
+        }
+
+
     }
 
     public Student getById(long id) {
@@ -60,32 +68,27 @@ public class StudentRepository {
                 student.getLastName().strip().equals("")  || student.getCourseName().strip().equals("")
                 || student.getFaculty().strip().equals("")  ||  student.getIndexNo() < 0 || student.getSemesterNo() < 0)
             throw new IllegalArgumentException("Passed student has to have all valid parameters");
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        em.merge(student);
-        transaction.commit();
-    }
 
-    public void updateStudent(Student student, String newFirstName, String newLastName, Integer newIndexNo, String newFaculty, String newCourseName, Integer newSemesterNo) {
-        if (student == null)
-            throw new IllegalArgumentException("Passed student cannot be null");
+        getById(student.getId());
+
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        student.setFirstName( newFirstName == null ? student.getFirstName() : newFirstName);
-        student.setLastName( newLastName == null ? student.getLastName() : newLastName);
-        student.setIndexNo( newIndexNo == null ? student.getIndexNo() : newIndexNo);
-        student.setFaculty( newFaculty == null ? student.getFaculty() : newFaculty);
-        student.setCourseName( newCourseName == null ? student.getCourseName() : newCourseName);
-        student.setSemesterNo( newSemesterNo == null ? student.getSemesterNo() : newSemesterNo);
-        transaction.commit();
+        try {
+            transaction.begin();
+            em.merge(student);
+            transaction.commit();
+        } catch (RollbackException e) {
+            throw new IllegalArgumentException("Unique index violation");
+        }
     }
 
     public void delete(Student student) {
         if (student == null)
             throw new IllegalArgumentException("Passed student cannot be null");
-            EntityTransaction transaction = em.getTransaction();
-            transaction.begin();
-            em.remove(student);
-            transaction.commit();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        if(!em.contains(student))
+            throw new IllegalArgumentException("There is no such student in the database");
+        em.remove(student);
+        transaction.commit();
     }
 }

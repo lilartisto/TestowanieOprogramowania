@@ -1,9 +1,11 @@
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public class StudentRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public StudentRepository(EntityManager em) {
         this.em = em;
@@ -23,6 +25,13 @@ public class StudentRepository {
         if(student == null){
             throw new IllegalArgumentException("Student cannot be null");
         }
+        if (student.getFirstName() == null || student.getLastName() == null || student.getCourseName() == null ||
+                student.getFaculty() == null || student.getIndexNo() == null || student.getSemesterNo() == null)
+            throw new IllegalArgumentException("All student's attributes cannot be null");
+        if (student.getFirstName().strip().equals("")  || student.getFirstName().strip().equals("") ||
+                student.getLastName().strip().equals("")  || student.getCourseName().strip().equals("")
+                || student.getFaculty().strip().equals("")  ||  student.getIndexNo() < 0 || student.getSemesterNo() < 0)
+            throw new IllegalArgumentException("Passed student has to have all valid parameters");
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         em.persist(student);
@@ -53,6 +62,7 @@ public class StudentRepository {
     public void updateStudent(Student student) {
         if (student == null)
             throw new IllegalArgumentException("Passed student cannot be null");
+
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         em.merge(student);

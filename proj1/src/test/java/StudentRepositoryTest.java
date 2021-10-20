@@ -50,6 +50,7 @@ public class StudentRepositoryTest {
         Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
 
         assertDoesNotThrow(() -> studentRepository.save(student));
+        assertEquals(student, studentRepository.getById(student.getId()));
     }
 
     @Test

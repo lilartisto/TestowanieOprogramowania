@@ -84,12 +84,19 @@ public class StudentRepositoryTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasNegativeNumbers() {
-        Student student = new Student("Stefani", "Germanotta", -123123, "WE", "CompSci", -1);
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> studentRepository.save(student)
-        );
-        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        Student student1 = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", -1);
+        Student student2 = new Student("Stefani", "Germanotta", -123123, "WE", "CompSci", 1);
+        Student student3 = new Student("Stefani", "Germanotta", -123123, "WE", "CompSci", -1);
+
+        Student[] students = new Student[]{ student1, student2, student3 };
+
+        for (Student student : students) {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> studentRepository.save(student)
+            );
+            assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        }
     }
 
     @Test
@@ -158,18 +165,45 @@ public class StudentRepositoryTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenUpdatedStudentHasFewNullFields() {
-        Student student = new Student("Jacek", "Walesa", 351646, "MINI", "IT", 7);
+        Student student1 = new Student("Jacek", "Walesa", 351646, "MINI", "IT", 7);
+        Student student2 = new Student("Jacek", "Walesa", 351647, "MINI", "IT", 7);
+        Student student3 = new Student("Jacek", "Walesa", 351648, "MINI", "IT", 7);
+        Student student4 = new Student("Jacek", "Walesa", 351649, "MINI", "IT", 7);
+        Student student5 = new Student("Jacek", "Walesa", 351650, "MINI", "IT", 7);
+        Student student6 = new Student("Jacek", "Walesa", 351651, "MINI", "IT", 7);
+        Student student7 = new Student("Jacek", "Walesa", 351651, "MINI", "IT", 7);
 
-        studentRepository.save(student);
-        student.setSemesterNo(null);
-        student.setCourseName(null);
-        student.setLastName(null);
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+        studentRepository.save(student3);
+        studentRepository.save(student4);
+        studentRepository.save(student5);
+        studentRepository.save(student6);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> studentRepository.updateStudent(student)
-        );
-        assertEquals("All student's attributes cannot be null", exception.getMessage());
+        student1.setSemesterNo(null);
+        student2.setCourseName(null);
+        student3.setLastName(null);
+
+        student4.setSemesterNo(null);
+        student4.setCourseName(null);
+        student5.setCourseName(null);
+        student5.setLastName(null);
+        student6.setSemesterNo(null);
+        student6.setLastName(null);
+
+        student7.setSemesterNo(null);
+        student7.setCourseName(null);
+        student7.setLastName(null);
+
+        Student[] students = new Student[]{ student1, student2, student3, student4, student5, student6, student7 };
+
+        for (Student student : students) {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> studentRepository.updateStudent(student)
+            );
+            assertEquals("All student's attributes cannot be null", exception.getMessage());
+        }
     }
 
     @Test
@@ -216,17 +250,29 @@ public class StudentRepositoryTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenUpdatedStudentHasNegativeIntegers() {
-        Student student = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+        Student student1 = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", 1);
+        Student student2 = new Student("Stefani", "Germanotta", 123124, "WE", "CompSci", 1);
+        Student student3 = new Student("Stefani", "Germanotta", 123125, "WE", "CompSci", 1);
 
-        studentRepository.save(student);
-        student.setSemesterNo(-1);
-        student.setIndexNo(-999999);
+        studentRepository.save(student1);
+        studentRepository.save(student2);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> studentRepository.updateStudent(student)
-        );
-        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        student1.setSemesterNo(-1);
+
+        student2.setIndexNo(-999999);
+
+        student3.setSemesterNo(-1);
+        student3.setIndexNo(-999999);
+
+        Student[] students = new Student[]{ student1, student2, student3 };
+
+        for (Student student : students) {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> studentRepository.updateStudent(student)
+            );
+            assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        }
     }
 
     @Test

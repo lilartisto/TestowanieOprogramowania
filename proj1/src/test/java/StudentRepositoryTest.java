@@ -64,12 +64,41 @@ public class StudentRepositoryTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasEmptyStrings() {
-        Student student = new Student("", "", 123123, "", "", 3);
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> studentRepository.save(student)
-        );
-        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        // 1 empty
+        Student student1 = new Student("", "Case", 123123, "MINI", "Math", 3);
+        Student student2 = new Student("Test", "", 123124, "MINI", "Math", 3);
+        Student student3 = new Student("Test", "Case", 123125, "", "Math", 3);
+        Student student4 = new Student("Test", "Case", 123126, "MINI", "", 3);
+
+        // 2 empty
+        Student student5 = new Student("", "", 123127, "MINI", "Math", 3);
+        Student student6 = new Student("Test", "", 123128, "", "Math", 3);
+        Student student7 = new Student("Test", "Case", 123129, "", "", 3);
+        Student student8 = new Student("", "Case", 123130, "", "Math", 3);
+        Student student9 = new Student("Test", "", 123131, "MINI", "", 3);
+        Student student10 = new Student("", "Case", 123132, "MINI", "", 3);
+
+        // 3 empty
+        Student student11 = new Student("", "", 123133, "", "Math", 3);
+        Student student12 = new Student("", "", 123134, "MINI", "", 3);
+        Student student13 = new Student("", "Case", 123135, "", "", 3);
+        Student student14 = new Student("Test", "", 123136, "", "", 3);
+
+        // 4 empty
+        Student student15 = new Student("", "", 123137, "", "", 3);
+
+        Student[] students = new Student[]{
+                student1, student2, student3, student4, student5, student6, student7, student8,
+                student9, student10, student11, student12, student13, student14, student15
+        };
+
+        for (Student student : students) {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> studentRepository.save(student)
+            );
+            assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        }
     }
 
     @Test
@@ -85,8 +114,8 @@ public class StudentRepositoryTest {
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenAddedStudentHasNegativeNumbers() {
         Student student1 = new Student("Stefani", "Germanotta", 123123, "WE", "CompSci", -1);
-        Student student2 = new Student("Stefani", "Germanotta", -123123, "WE", "CompSci", 1);
-        Student student3 = new Student("Stefani", "Germanotta", -123123, "WE", "CompSci", -1);
+        Student student2 = new Student("Stefani", "Germanotta", -123124, "WE", "CompSci", 1);
+        Student student3 = new Student("Stefani", "Germanotta", -123125, "WE", "CompSci", -1);
 
         Student[] students = new Student[]{ student1, student2, student3 };
 
@@ -208,18 +237,81 @@ public class StudentRepositoryTest {
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenUpdatedStudentHasFewEmptyStrings() {
-        Student student = new Student("Czarek", "Obama", 383494, "MINI", "Math", 6);
+        // 1 empty
+        Student student1 = new Student("Test", "Case", 123123, "MINI", "Math", 3);
+        Student student2 = new Student("Test", "Case", 123124, "MINI", "Math", 3);
+        Student student3 = new Student("Test", "Case", 123125, "MINI", "Math", 3);
+        Student student4 = new Student("Test", "Case", 123126, "MINI", "Math", 3);
 
-        studentRepository.save(student);
-        student.setSemesterNo(7);
-        student.setFaculty("");
-        student.setCourseName("");
+        // 2 empty
+        Student student5 = new Student("Test", "Case", 123127, "MINI", "Math", 3);
+        Student student6 = new Student("Test", "Case", 123128, "MINI", "Math", 3);
+        Student student7 = new Student("Test", "Case", 123129, "MINI", "Math", 3);
+        Student student8 = new Student("Test", "Case", 123130, "MINI", "Math", 3);
+        Student student9 = new Student("Test", "Case", 123131, "MINI", "Math", 3);
+        Student student10 = new Student("Test", "Case", 123132, "MINI", "Math", 3);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> studentRepository.updateStudent(student)
-        );
-        assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        // 3 empty
+        Student student11 = new Student("Test", "Case", 123133, "MINI", "Math", 3);
+        Student student12 = new Student("Test", "Case", 123134, "MINI", "Math", 3);
+        Student student13 = new Student("Test", "Case", 123135, "MINI", "Math", 3);
+        Student student14 = new Student("Test", "Case", 123136, "MINI", "Math", 3);
+
+        // 4 empty
+        Student student15 = new Student("Test", "Case", 123137, "MINI", "Math", 3);
+
+        Student[] students = new Student[]{
+                student1, student2, student3, student4, student5, student6, student7, student8,
+                student9, student10, student11, student12, student13, student14, student15
+        };
+
+        for (Student student : students) {
+            studentRepository.save(student);
+        }
+
+        student1.setFirstName("");
+        student5.setFirstName("");
+        student8.setFirstName("");
+        student10.setFirstName("");
+        student11.setFirstName("");
+        student12.setFirstName("");
+        student13.setFirstName("");
+        student15.setFirstName("");
+
+        student2.setLastName("");
+        student5.setLastName("");
+        student6.setLastName("");
+        student9.setLastName("");
+        student11.setLastName("");
+        student12.setLastName("");
+        student14.setLastName("");
+        student15.setLastName("");
+
+        student3.setFaculty("");
+        student6.setFaculty("");
+        student7.setFaculty("");
+        student8.setFaculty("");
+        student11.setFaculty("");
+        student13.setFaculty("");
+        student14.setFaculty("");
+        student15.setFaculty("");
+
+        student4.setCourseName("");
+        student7.setCourseName("");
+        student9.setCourseName("");
+        student10.setCourseName("");
+        student12.setCourseName("");
+        student13.setCourseName("");
+        student14.setCourseName("");
+        student15.setCourseName("");
+
+        for (Student student : students) {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> studentRepository.updateStudent(student)
+            );
+            assertEquals("Passed student has to have all valid parameters", exception.getMessage());
+        }
     }
 
     @Test

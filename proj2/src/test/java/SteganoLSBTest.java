@@ -14,10 +14,10 @@ public class SteganoLSBTest {
                 Color encColor = new Color(encoded.getRGB(w, h));
                 Color secColor = new Color(twoBitSecret.getRGB(w, h));
 
-                assertEquals(secColor.getRed(), convertFrom2BitTo8BitValue(encColor.getRed() % 4));
-                assertEquals(secColor.getGreen(), convertFrom2BitTo8BitValue(encColor.getGreen() % 4));
-                assertEquals(secColor.getBlue(), convertFrom2BitTo8BitValue(encColor.getBlue() % 4));
-                assertEquals(secColor.getAlpha(), convertFrom2BitTo8BitValue(encColor.getAlpha() % 4));
+                assertEquals(convertFrom8To2BitValue(secColor.getRed()), convertFrom2BitTo8BitValue(encColor.getRed() % 4));
+                assertEquals(convertFrom8To2BitValue(secColor.getGreen()), convertFrom2BitTo8BitValue(encColor.getGreen() % 4));
+                assertEquals(convertFrom8To2BitValue(secColor.getBlue()), convertFrom2BitTo8BitValue(encColor.getBlue() % 4));
+                assertEquals(convertFrom8To2BitValue(secColor.getAlpha()), convertFrom2BitTo8BitValue(encColor.getAlpha() % 4));
             }
         }
     }

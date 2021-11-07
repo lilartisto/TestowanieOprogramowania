@@ -32,9 +32,9 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBWEncodedImage() throws IOException {
-        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200_BW_COWS.png"));
-        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200_BW_HORSE.png"));
+    public void shouldWorkProperlyWhenGivenBWEncodedImage200x200() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_HORSE.png"));
 
         BufferedImage encoded = stegano.encode(source, secret);
 
@@ -43,9 +43,20 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenColorEncodedImage() throws IOException {
-        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200_COLOR_COWS.png"));
-        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200_COLOR_HORSE.png"));
+    public void shouldWorkProperlyWhenGivenBWEncodedImage2000x600() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MIX.png"));
+
+        BufferedImage encoded = stegano.encode(source, secret);
+
+        are2latestEqual(encoded, secret);
+
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenColorEncodedImage200x200() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_HORSE.png"));
 
         BufferedImage encoded = stegano.encode(source, secret);
 
@@ -53,9 +64,29 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenTransparentEncodedImage() throws IOException {
-        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200_BW_TRANSPARENT_COWS.png"));
-        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200_COLOR_TRANSPARENT_HORSE.png"));
+    public void shouldWorkProperlyWhenGivenColorEncodedImage2000x600() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_MOUNTAINS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_MIX.png"));
+
+        BufferedImage encoded = stegano.encode(source, secret);
+
+        are2latestEqual(encoded, secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenTransparentEncodedImage200x200() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_TRANSPARENT_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
+
+        BufferedImage encoded = stegano.encode(source, secret);
+
+        are2latestEqual(encoded, secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenTransparentEncodedImage2000x600() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_TRANSPARENCY_MOUNTAINS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_TRANSPARENCY_MIX.png"));
 
         BufferedImage encoded = stegano.encode(source, secret);
 

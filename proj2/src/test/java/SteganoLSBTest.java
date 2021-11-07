@@ -1,9 +1,66 @@
+import org.junit.jupiter.api.Test;
+
+import javax.imageio.ImageIO;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SteganoLSBTest {
+
+    private final Stegano stegano = new SteganoLSB();
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenGivenNullEncodedImage() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.decode(null)
+        );
+        assertEquals("Passed image cannot be null", exception.getMessage());
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenGivenEmptyEncodedImage() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.decode(new BufferedImage(0,0,BufferedImage.TYPE_INT_ARGB))
+        );
+        assertEquals("Width (0) and height (0) cannot be <= 0", exception.getMessage());
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenBWEncodedImage() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200_BW_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200_BW_HORSE.png"));
+
+        BufferedImage encoded = stegano.encode(source, secret);
+
+        are2latestEqual(encoded, secret);
+
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenColorEncodedImage() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200_COLOR_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200_COLOR_HORSE.png"));
+
+        BufferedImage encoded = stegano.encode(source, secret);
+
+        are2latestEqual(encoded, secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenTransparentEncodedImage() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200_BW_TRANSPARENT_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200_COLOR_TRANSPARENT_HORSE.png"));
+
+        BufferedImage encoded = stegano.encode(source, secret);
+
+        are2latestEqual(encoded, secret);
+    }
 
     //checks if last two bits of every pixel in encoded image are the same as secret image pixel bytes
     private void are2latestEqual(BufferedImage encoded, BufferedImage secret) {

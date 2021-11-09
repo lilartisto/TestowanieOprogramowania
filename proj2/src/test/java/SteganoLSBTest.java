@@ -13,6 +13,75 @@ public class SteganoLSBTest {
 
     private final Stegano stegano = new SteganoLSB();
 
+    //ENCODE TESTS
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenGivenNullImage() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.encode(null, null)
+        );
+        assertEquals("Passed images cannot be null", exception.getMessage());
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenGivenEmptyImage() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.encode(new BufferedImage(0,0,BufferedImage.TYPE_INT_ARGB), new BufferedImage(0,0,BufferedImage.TYPE_INT_ARGB))
+        );
+        assertEquals("Width and height of both images must be > 0.", exception.getMessage());
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenBothColorImages() throws IOException{
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_HORSE.png"));
+
+        are2YoungestEqual(stegano.encode(source, secret), secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenBothTransparentImages() throws IOException {
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_TRANSPARENT_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_TRANSPARENT_HORSE.png"));
+
+        are2YoungestEqual(stegano.encode(source, secret), secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenBothBWImages() throws IOException{
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MIX.png"));
+
+        are2YoungestEqual(stegano.encode(source, secret), secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenBWandColorImages() throws IOException{
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_MIX.png"));
+
+        are2YoungestEqual(stegano.encode(source, secret), secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenBWandTransparentImages() throws IOException{
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_HORSE.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
+
+        are2YoungestEqual(stegano.encode(source, secret), secret);
+    }
+
+    @Test
+    public void shouldWorkProperlyWhenGivenColorAndTransparentImages() throws IOException{
+        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
+        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
+
+        are2YoungestEqual(stegano.encode(source, secret), secret);
+    }
+    //DECODE TESTS
+
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenGivenNullEncodedImage() {
         IllegalArgumentException exception = assertThrows(
@@ -105,8 +174,10 @@ public class SteganoLSBTest {
         assertEquals(convertedSecret, decoded);
     }
 
+    //HELPER FUNCTIONS
+
     //checks if last two bits of every pixel in encoded image are the same as secret image pixel bytes
-    private void are2latestEqual(BufferedImage encoded, BufferedImage secret) {
+    private void are2YoungestEqual(BufferedImage encoded, BufferedImage secret) {
         BufferedImage twoBitSecret = convertTo2bitImage(secret);
 
         for (int w = 0; w < encoded.getWidth(); w++) {

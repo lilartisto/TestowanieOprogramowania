@@ -38,7 +38,7 @@ public class SteganoLSBTest {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), secret);
+        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class SteganoLSBTest {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_TRANSPARENT_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_TRANSPARENT_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), secret);
+        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class SteganoLSBTest {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MIX.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), secret);
+        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class SteganoLSBTest {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_MIX.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), secret);
+        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class SteganoLSBTest {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_HORSE.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), secret);
+        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SteganoLSBTest {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), secret);
+        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
     }
     //DECODE TESTS
 

@@ -62,7 +62,7 @@ public class SteganoLSB implements Stegano {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                decodedImg.setRGB(x, y, decodeRGBPixel(decodedImg.getRGB(x, y)));
+                decodedImg.setRGB(x, y, decodeRGBPixel(encoded.getRGB(x, y)));
             }
         }
 

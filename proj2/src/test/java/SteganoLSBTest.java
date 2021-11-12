@@ -92,15 +92,6 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenGivenEmptyEncodedImage() {
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> stegano.decode(new BufferedImage(0,0,BufferedImage.TYPE_INT_ARGB))
-        );
-        assertEquals("Width (0) and height (0) cannot be <= 0", exception.getMessage());
-    }
-
-    @Test
     public void shouldWorkProperlyWhenGivenBWEncodedImage200x200() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_HORSE.png"));

@@ -28,13 +28,13 @@ public class SteganoLSBTest {
     public void shouldThrowIllegalArgumentExceptionWhenGivenEmptyImage() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> stegano.encode(new BufferedImage(0,0,BufferedImage.TYPE_INT_ARGB), new BufferedImage(0,0,BufferedImage.TYPE_INT_ARGB))
+                () -> stegano.encode(new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB), new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB))
         );
         assertEquals("Width and height of both images must be > 0.", exception.getMessage());
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBothColorImages() throws IOException{
+    public void shouldWorkProperlyWhenGivenBothColorImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_HORSE.png"));
 
@@ -50,7 +50,7 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBothBWImages() throws IOException{
+    public void shouldWorkProperlyWhenGivenBothBWImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MIX.png"));
 
@@ -58,7 +58,7 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBWandColorImages() throws IOException{
+    public void shouldWorkProperlyWhenGivenBWandColorImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_BW_MOUNTAINS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_MIX.png"));
 
@@ -66,7 +66,7 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBWandTransparentImages() throws IOException{
+    public void shouldWorkProperlyWhenGivenBWandTransparentImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_HORSE.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
@@ -74,7 +74,7 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenColorAndTransparentImages() throws IOException{
+    public void shouldWorkProperlyWhenGivenColorAndTransparentImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
@@ -100,7 +100,7 @@ public class SteganoLSBTest {
         BufferedImage encoded = stegano.encode(source, secret);
         BufferedImage decoded = stegano.decode(encoded);
 
-        assertEquals(convertedSecret, decoded);
+        checkEquality(convertedSecret, decoded);
 
     }
 
@@ -113,7 +113,7 @@ public class SteganoLSBTest {
         BufferedImage encoded = stegano.encode(source, secret);
         BufferedImage decoded = stegano.decode(encoded);
 
-        assertEquals(convertedSecret, decoded);
+        checkEquality(convertedSecret, decoded);
 
     }
 
@@ -126,7 +126,7 @@ public class SteganoLSBTest {
         BufferedImage encoded = stegano.encode(source, secret);
         BufferedImage decoded = stegano.decode(encoded);
 
-        assertEquals(convertedSecret, decoded);
+        checkEquality(convertedSecret, decoded);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class SteganoLSBTest {
         BufferedImage encoded = stegano.encode(source, secret);
         BufferedImage decoded = stegano.decode(encoded);
 
-        assertEquals(convertedSecret, decoded);
+        checkEquality(convertedSecret, decoded);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class SteganoLSBTest {
         BufferedImage encoded = stegano.encode(source, secret);
         BufferedImage decoded = stegano.decode(encoded);
 
-        assertEquals(convertedSecret, decoded);
+        checkEquality(convertedSecret, decoded);
     }
 
     @Test
@@ -162,7 +162,7 @@ public class SteganoLSBTest {
         BufferedImage encoded = stegano.encode(source, secret);
         BufferedImage decoded = stegano.decode(encoded);
 
-        assertEquals(convertedSecret, decoded);
+        checkEquality(convertedSecret, decoded);
     }
 
     //HELPER FUNCTIONS
@@ -210,8 +210,17 @@ public class SteganoLSBTest {
 
     //conversion from 2 (0-3) to 8 bit value - returns int 0-255
     private int convertFrom2BitTo8BitValue(int value) {
-        return Math.round(((float)value / 3) * 255 );
+        return Math.round(((float) value / 3) * 255);
     }
 
+    private void checkEquality(BufferedImage expected, BufferedImage actual) {
+        for (int w = 0; w < expected.getWidth(); w++) {
+            for (int h = 0; h < expected.getHeight(); h++) {
+                Color expectedColor = new Color(expected.getRGB(w, h));
+                Color actualColor = new Color(actual.getRGB(w, h));
+                assertEquals(expectedColor, actualColor);
+            }
+        }
+    }
 
 }

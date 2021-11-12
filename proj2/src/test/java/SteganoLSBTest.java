@@ -216,9 +216,7 @@ public class SteganoLSBTest {
     private void checkEquality(BufferedImage expected, BufferedImage actual) {
         for (int w = 0; w < expected.getWidth(); w++) {
             for (int h = 0; h < expected.getHeight(); h++) {
-                Color expectedColor = new Color(expected.getRGB(w, h));
-                Color actualColor = new Color(actual.getRGB(w, h));
-                assertEquals(expectedColor, actualColor);
+                assertEquals(expected.getRGB(w, h), actual.getRGB(w, h));
             }
         }
     }

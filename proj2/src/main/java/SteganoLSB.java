@@ -5,7 +5,45 @@ public class SteganoLSB implements Stegano {
 
     @Override
     public BufferedImage encode(BufferedImage source, BufferedImage secret) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (source == null || secret == null) {
+            throw new IllegalArgumentException("Passed images cannot be null");
+        }
+
+        return encodeImg(source, secret);
+    }
+
+    private BufferedImage encodeImg(BufferedImage src, BufferedImage secret) {
+        int width = src.getWidth();
+        int height = src.getHeight();
+        BufferedImage encodedImg = new BufferedImage(width, height, src.getType());
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                encodedImg.setRGB(x, y, encodeRGBPixel(
+                        src.getRGB(x, y), secret.getRGB(x, y)
+                ));
+            }
+        }
+
+        return encodedImg;
+    }
+
+    private int encodeRGBPixel(int srcPixel, int secretPixel) {
+        Color srcColor = new Color(srcPixel);
+        Color secretColor = new Color(secretPixel);
+
+        return new Color(
+                encode8bAs2b(srcColor.getRed(), secretColor.getRed()),
+                encode8bAs2b(srcColor.getGreen(), secretColor.getGreen()),
+                encode8bAs2b(srcColor.getBlue(), secretColor.getBlue()),
+                encode8bAs2b(srcColor.getAlpha(), secretColor.getAlpha())
+        ).getRGB();
+    }
+
+    private int encode8bAs2b(int src, int secret) {
+        int secret2b = Math.round(((float)secret / 255) * 3);
+
+        return (src & 252) | secret2b;
     }
 
     @Override

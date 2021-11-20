@@ -33,11 +33,15 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBothTransparentImages() throws IOException {
+    public void shouldThrowIllegalArgumentExceptionWhenGivenBothTransparentImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_TRANSPARENT_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.encode(source, secret)
+        );
+        assertEquals("Passed images cannot contain alpha transparency", exception.getMessage());
     }
 
     @Test
@@ -57,19 +61,27 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenBWandTransparentImages() throws IOException {
+    public void shouldThrowIllegalArgumentExceptionWhenGivenBWandTransparentImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_HORSE.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.encode(source, secret)
+        );
+        assertEquals("Passed images cannot contain alpha transparency", exception.getMessage());
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenColorAndTransparentImages() throws IOException {
+    public void shouldThrowIllegalArgumentExceptionWhenGivenColorAndTransparentImages() throws IOException {
         BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_COWS.png"));
         BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
 
-        are2YoungestEqual(stegano.encode(source, secret), convertTo2bitImage(secret));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.encode(source, secret)
+        );
+        assertEquals("Passed images cannot contain alpha transparency", exception.getMessage());
     }
     //DECODE TESTS
 
@@ -133,27 +145,25 @@ public class SteganoLSBTest {
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenTransparentEncodedImage200x200() throws IOException {
-        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_TRANSPARENT_COWS.png"));
-        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_COLOR_TRANSPARENT_HORSE.png"));
-        BufferedImage convertedSecret = convertTo2bitImage(secret);
+    public void shouldThrowIllegalArgumentExceptionWhenGivenTransparentEncodedImage200x200() throws IOException {
+        BufferedImage encoded = ImageIO.read(new File("src/test/to_test_pics/200x200/200x200_BW_TRANSPARENT_COWS.png"));
 
-        BufferedImage encoded = stegano.encode(source, secret);
-        BufferedImage decoded = stegano.decode(encoded);
-
-        checkEquality(convertedSecret, decoded);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.decode(encoded)
+        );
+        assertEquals("Passed image cannot contain alpha transparency", exception.getMessage());
     }
 
     @Test
-    public void shouldWorkProperlyWhenGivenTransparentEncodedImage2000x600() throws IOException {
-        BufferedImage source = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_TRANSPARENCY_MOUNTAINS.png"));
-        BufferedImage secret = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_TRANSPARENCY_MIX.png"));
-        BufferedImage convertedSecret = convertTo2bitImage(secret);
+    public void shouldThrowIllegalArgumentExceptionWhenGivenTransparentEncodedImage2000x600() throws IOException {
+        BufferedImage encoded = ImageIO.read(new File("src/test/to_test_pics/2000x600/2000x600_COLOR_TRANSPARENCY_MOUNTAINS.png"));
 
-        BufferedImage encoded = stegano.encode(source, secret);
-        BufferedImage decoded = stegano.decode(encoded);
-
-        checkEquality(convertedSecret, decoded);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> stegano.decode(encoded)
+        );
+        assertEquals("Passed image cannot contain alpha transparency", exception.getMessage());
     }
 
     //HELPER FUNCTIONS

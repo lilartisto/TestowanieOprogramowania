@@ -3,10 +3,27 @@ import java.awt.image.BufferedImage;
 
 public class SteganoLSB implements Stegano {
 
+    private boolean isAlpha(BufferedImage img) {
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                int alpha = img.getRGB(x, y) >>> 24;
+
+                if (alpha != 255) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public BufferedImage encode(BufferedImage source, BufferedImage secret) {
         if (source == null || secret == null) {
             throw new IllegalArgumentException("Passed images cannot be null");
+        }
+        if (isAlpha(source) || isAlpha(secret)) {
+            throw new IllegalArgumentException("Passed images cannot contain alpha transparency");
         }
 
         return encodeImg(source, secret);
@@ -50,6 +67,9 @@ public class SteganoLSB implements Stegano {
     public BufferedImage decode(BufferedImage encoded) {
         if (encoded == null) {
             throw new IllegalArgumentException("Passed image cannot be null");
+        }
+        if (isAlpha(encoded)) {
+            throw new IllegalArgumentException("Passed image cannot contain alpha transparency");
         }
 
         return decodeImg(encoded);

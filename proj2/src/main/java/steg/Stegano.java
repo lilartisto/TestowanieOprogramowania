@@ -1,3 +1,5 @@
+package steg;
+
 import java.awt.image.BufferedImage;
 
 public interface Stegano {

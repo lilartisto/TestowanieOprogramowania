@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Test;
+import steg.Stegano;
+import steg.SteganoLSB;
 
 import javax.imageio.ImageIO;
 

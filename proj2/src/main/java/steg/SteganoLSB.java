@@ -1,3 +1,7 @@
+package steg;
+
+import steg.Stegano;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

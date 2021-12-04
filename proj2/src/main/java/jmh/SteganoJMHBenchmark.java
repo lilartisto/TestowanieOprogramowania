@@ -16,15 +16,11 @@ public class SteganoJMHBenchmark {
     public static class ExecutionPlan2000x600 {
 
         @Param({"2000x600_BW_MIX.png",
-                "2000x600_BW_MOUNTAINS.png",
                 "2000x600_COLOR_MIX.png",
-                "2000x600_COLOR_MOUNTAINS.png",
         })
         public String source;
 
-        @Param({"2000x600_BW_MIX.png",
-                "2000x600_BW_MOUNTAINS.png",
-                "2000x600_COLOR_MIX.png",
+        @Param({"2000x600_BW_MOUNTAINS.png",
                 "2000x600_COLOR_MOUNTAINS.png"
         })
         public String secret;

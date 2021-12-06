@@ -64,4 +64,50 @@ public class SteganoJMHBenchmark {
 
         executionPlan.stegano.encode(source, secret);
     }
+
+    @State(Scope.Thread)
+    public static class DecodeExecutionPlan200x200 {
+
+
+        @Param({"200x200_BW_COLOR_COWS.png",
+                "200x200_COLOR_HORSE.png"
+        })
+        public String secret;
+
+        private final Stegano stegano = new SteganoLSB();
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.Throughput)
+    @Threads(3)
+    @Measurement(time = 1, iterations = 1)
+    @Warmup(iterations = 1, timeUnit = TimeUnit.MILLISECONDS, time = 1)
+    public void decode200x200THRPT(DecodeExecutionPlan200x200 executionPlan) throws IOException {
+        String path = "proj2/src/test/to_test_pics/200x200/";
+        BufferedImage secret = ImageIO.read(new File(path + executionPlan.secret));
+
+        executionPlan.stegano.decode(secret);
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @Measurement(time = 1, iterations = 1)
+    @Warmup(iterations = 1, timeUnit = TimeUnit.MILLISECONDS, time = 1)
+    public void decode200x200AVG(ExecutionPlan2000x600 executionPlan) throws IOException {
+        String path = "proj2/src/test/to_test_pics/200x200/";
+        BufferedImage secret = ImageIO.read(new File(path + executionPlan.secret));
+
+        executionPlan.stegano.decode(secret);
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.SampleTime)
+    @Measurement(time = 1, iterations = 1)
+    @Warmup(iterations = 1, timeUnit = TimeUnit.MILLISECONDS, time = 1)
+    public void decode200x200AVGSPLT(DecodeExecutionPlan200x200 executionPlan) throws IOException {
+        String path = "proj2/src/test/to_test_pics/200x200/";
+        BufferedImage secret = ImageIO.read(new File(path + executionPlan.secret));
+
+        executionPlan.stegano.decode(secret);
+    }
 }

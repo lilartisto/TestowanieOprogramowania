@@ -18,14 +18,10 @@ public class SteganoJMHBenchmark {
     @State(Scope.Thread)
     public static class EncodeExecutionPlan2000x600 {
 
-        @Param({"2000x600_BW_MIX.png",
-                "2000x600_COLOR_MIX.png",
-        })
+        @Param({"2000x600_COLOR_MIX.png"})
         public String source;
 
-        @Param({"2000x600_BW_MOUNTAINS.png",
-                "2000x600_COLOR_MOUNTAINS.png"
-        })
+        @Param({"2000x600_BW_MOUNTAINS.png"})
         public String secret;
 
         public BufferedImage sourceImage;
@@ -69,14 +65,10 @@ public class SteganoJMHBenchmark {
     @State(Scope.Thread)
     public static class EncodeExecutionPlan200x200 {
 
-        @Param({"200x200_BW_COWS.png",
-                "200x200_COLOR_HORSE.png",
-        })
+        @Param({"200x200_BW_COWS.png"})
         public String source;
 
-        @Param({"200x200_COLOR_COWS.png",
-                "200x200_BW_HORSE.png"
-        })
+        @Param({"200x200_COLOR_COWS.png"})
         public String secret;
 
         public BufferedImage sourceImage;
@@ -120,9 +112,7 @@ public class SteganoJMHBenchmark {
     @State(Scope.Thread)
     public static class DecodeExecutionPlan200x200 {
 
-        @Param({"200x200_BW_COWS.png",
-                "200x200_COLOR_HORSE.png"
-        })
+        @Param({"200x200_COLOR_HORSE.png"})
         public String secret;
 
         public BufferedImage secretImage;
@@ -164,9 +154,7 @@ public class SteganoJMHBenchmark {
     @State(Scope.Thread)
     public static class DecodeExecutionPlan2000x600 {
 
-        @Param({"2000x600_BW_MIX.png",
-                "2000x600_COLOR_MIX.png",
-        })
+        @Param({"2000x600_COLOR_MIX.png"})
         public String secret;
 
         public BufferedImage secretImage;

@@ -67,6 +67,57 @@ public class SteganoJMHBenchmark {
 
 
     @State(Scope.Thread)
+    public static class EncodeExecutionPlan200x200 {
+
+        @Param({"200x200_BW_COWS.png",
+                "200x200_COLOR_HORSE.png",
+        })
+        public String source;
+
+        @Param({"200x200_COLOR_COWS.png",
+                "200x200_BW_HORSE.png"
+        })
+        public String secret;
+
+        public BufferedImage sourceImage;
+        public BufferedImage secretImage;
+
+        private final Stegano stegano = new SteganoLSB();
+
+        @Setup
+        public void setup() throws IOException{
+            sourceImage = ImageIO.read(new File(SteganoJMHBenchmark.PATH_200x200 + source));
+            secretImage = ImageIO.read(new File(SteganoJMHBenchmark.PATH_200x200 + secret));
+        }
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.Throughput)
+    @Threads(3)
+    @Measurement(time = 1, timeUnit = TimeUnit.SECONDS, iterations = 1)
+    @Warmup(iterations = 1, timeUnit = TimeUnit.MILLISECONDS, time = 1)
+    public void encode200x200THRPT(EncodeExecutionPlan200x200 executionPlan) {
+        executionPlan.stegano.encode(executionPlan.sourceImage, executionPlan.secretImage);
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @Measurement(time = 1, timeUnit = TimeUnit.SECONDS, iterations = 1)
+    @Warmup(iterations = 1, timeUnit = TimeUnit.MILLISECONDS, time = 1)
+    public void encode200x200AVG(EncodeExecutionPlan200x200 executionPlan) {
+        executionPlan.stegano.encode(executionPlan.sourceImage, executionPlan.secretImage);
+    }
+
+    @Benchmark
+    @BenchmarkMode(Mode.SampleTime)
+    @Measurement(time = 1, timeUnit = TimeUnit.SECONDS, iterations = 1)
+    @Warmup(iterations = 1, timeUnit = TimeUnit.MILLISECONDS, time = 1)
+    public void encode200x200AVGSPLT(EncodeExecutionPlan200x200 executionPlan) {
+        executionPlan.stegano.encode(executionPlan.sourceImage, executionPlan.secretImage);
+    }
+
+
+    @State(Scope.Thread)
     public static class DecodeExecutionPlan200x200 {
 
         @Param({"200x200_BW_COWS.png",

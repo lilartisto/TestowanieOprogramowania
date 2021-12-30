@@ -1,5 +1,4 @@
-package jbehave;
-
+import steps.WrongOutputFileFormatSteps;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.LoadFromClasspath;
@@ -33,8 +32,7 @@ public class UserStories extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        StoryFinder finder = new StoryFinder();
-        return finder.findPaths(codeLocationFromClass(this.getClass()).getFile(), Arrays.asList("**/*.story"), Arrays.asList(""));
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), Arrays.asList("**/*.story"), Arrays.asList(""));
     }
 
 }

@@ -1,4 +1,4 @@
-package jbehave;
+package steps;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -18,7 +18,7 @@ public class WrongOutputFileFormatSteps {
 
     private final FileManager fileManager = new FileManager();
     private final Stegano stegano = new SteganoLSB();
-    private final String path = "src/test/to_test_pics/2000x600/";
+    private final String path = "src/test/to_test_pics/200x200/";
 
     private BufferedImage source;
     private BufferedImage secret;
@@ -26,6 +26,7 @@ public class WrongOutputFileFormatSteps {
 
     @Given("correct paths to source and secret image")
     public void readingCorrectFiles() throws IOException {
+        System.out.println(new File(path + "200x200_BW_COWS.png").getAbsolutePath());
         source = fileManager.readFile(path + "200x200_BW_COWS.png");
         secret = fileManager.readFile(path + "200x200_COLOR_COWS.png");
     }

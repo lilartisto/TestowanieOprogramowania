@@ -1,3 +1,4 @@
+import steps.Encoded_and_DecodedSteps;
 import steps.WrongOutputFileFormatSteps;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
@@ -27,7 +28,7 @@ public class UserStories extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new WrongOutputFileFormatSteps());
+        return new InstanceStepsFactory(configuration(), new WrongOutputFileFormatSteps(), new Encoded_and_DecodedSteps());
     }
 
     @Override

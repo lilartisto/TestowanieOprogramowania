@@ -23,7 +23,7 @@ public class Encoded_and_DecodedSteps {
     private BufferedImage secret;
     private BufferedImage encoded;
 
-    @Given("correct paths to source and secret image")
+    @Given("correct paths to source and secret images")
     public void readingCorrectFiles() throws IOException {
         source = fileManager.readFile(path + "2000x600_BW_MIX.png");
         secret = fileManager.readFile(path + "2000x600_BW_MOUNTAINS.png");

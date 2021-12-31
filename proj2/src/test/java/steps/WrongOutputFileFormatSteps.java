@@ -26,12 +26,11 @@ public class WrongOutputFileFormatSteps {
 
     @Given("correct paths to source and secret image")
     public void readingCorrectFiles() throws IOException {
-        System.out.println(new File(path + "200x200_BW_COWS.png").getAbsolutePath());
         source = fileManager.readFile(path + "200x200_BW_COWS.png");
         secret = fileManager.readFile(path + "200x200_COLOR_COWS.png");
     }
 
-    @When("secret image is encoded into source image")
+    @When("secret picture is encoded into source image")
     public void encoding() {
         encoded = stegano.encode(source, secret);
     }
